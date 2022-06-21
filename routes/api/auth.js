@@ -3,13 +3,14 @@ import bcrypt from 'bcryptjs';
 import config from 'config';
 import jwt from 'jsonwebtoken';
 import User from '../../models/User';
+import auth from '../../middleware/auth';
 
 const JWT_SECRET = config.get('jwtSecret')
 const router = Router();
 
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
-  console.log("Request:",req.body)
+  console.log("Request:", req.body)
   if (!email || !password) {
     return res.status(400).json({ msg: 'Please enter all fields' });
   }
@@ -21,7 +22,7 @@ router.post('/login', async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw Error('Invalid credentials');
 
-    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: 3600 });
+    const token = jwt.sign({ id: user._id,email:user.email,name:user.name }, JWT_SECRET, { expiresIn: 3600 });
     if (!token) throw Error('Couldnt sign the token');
 
     res.status(200).json({
@@ -63,7 +64,7 @@ router.post('/register', async (req, res) => {
     const savedUser = await newUser.save();
     if (!savedUser) throw Error('Something went wrong saving the user');
     const token = jwt.sign({ id: savedUser._id, name: savedUser.name, email: savedUser.email }, JWT_SECRET, {
-      expiresIn: 3600 
+      expiresIn: 3600
     });
 
     res.status(200).json({
@@ -78,5 +79,25 @@ router.post('/register', async (req, res) => {
     res.status(400).json({ error: e.message });
   }
 });
+router.get("/user", auth, async (req, res) => {
+  let { email } = req.user;
+  console.log("User::::::",req.user)
+  try {
+    const user = await User.findOne({ email });
+    // Check for Existense of User
+    if (!user) throw Error('User does not exist');
+    // Response with only User Data(except password)
+    res.status(200).json(
+      {
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email
+        }
+      })
+  } catch (e) {
+    res.status(400).json({ msg: e.message });
+  }
+});// End of Verify User using Token
 
 export default router;

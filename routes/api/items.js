@@ -6,13 +6,13 @@ import Item from '../../models/Item';
 const router = Router();
 
 router.get('/', async (req, res) => {
-  const { pageNo, itemCount } = req.query;
+  // const { pageNo, itemCount } = req.query; 
   try {
     const items = await Item.find();
     if (!items) throw Error('No items');
 
     res.status(200).json({
-      products: items.slice((pageNo - 1) * itemCount, pageNo * itemCount),
+      products: items,//.slice((pageNo - 1) * itemCount, pageNo * itemCount),
       total: items.length
     });
   } catch (e) {

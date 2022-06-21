@@ -7,24 +7,14 @@ import ProductProvider from "./context/ProductProvider";
 import './App.css';
 import Auth from "./components/auth/Auth";
 import AddProduct from "./components/addproduct/AddProduct";
+import Navbar from "./components/Navbar/Navbar";
 
 const App:FC = () => {
     return (
         <ProductProvider>
             <CartProvider>
                 <Router>
-                   
-                <header>
-                    <nav className="nav" style={{ textAlign: 'center' }}>
-                        <ul>
-                            <li className="logo"><Link to='/'><span>PS Kart</span></Link></li>
-                            <li><Link to='/'>Home</Link></li>
-                            <li><Link to='/auth'>Login</Link></li>
-                            <li><Link to='/addItem'>Add Item</Link></li>
-                           
-                        </ul>
-                    </nav>
-                </header>
+               <Navbar/>
                 <Routes>
                         <Route index element={<ProductList/>}/>
                         <Route path='/auth' element={<Auth/>}/>

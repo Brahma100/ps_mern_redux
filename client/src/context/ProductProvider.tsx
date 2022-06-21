@@ -17,21 +17,21 @@ const ProductProvider: FC<Props> = ({ children }) => {
     const [dataLimit] = useState<number>(8);
     const [totalItems, setTotalItems] = useState<number>(items.length);
     const [products, setProducts] = useState<IProduct[]>(items);
-    useEffect(() => {
-        setLoading(true)
-        fetch(`/api/items?pageNo=${pageNo}&itemCount=${dataLimit}`)
-            .then(res => res.json())
-            .then(data => {
-                const { products, total } = data;
-                setItems(products)
-                setTotalItems(total);
-                // console.log(totalItems)
-                setLoading(false)
-            }).catch(err => {
-                setLoading(false)
-                console.log("Error While fetching products", err?.message);
-            });
-    }, [pageNo])
+    // useEffect(() => {
+    //     setLoading(true)
+    //     fetch(`/api/items?pageNo=${pageNo}&itemCount=${dataLimit}`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             const { products, total } = data;
+    //             setItems(products)
+    //             setTotalItems(total);
+    //             // console.log(totalItems)
+    //             setLoading(false)
+    //         }).catch(err => {
+    //             setLoading(false)
+    //             console.log("Error While fetching products", err?.message);
+    //         });
+    // }, [pageNo])
 
     useEffect(() => {
         setProducts(items);
