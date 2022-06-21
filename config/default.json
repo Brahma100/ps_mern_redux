@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb://brahma:test@ac-chd20zt-shard-00-00.dxy3pnq.mongodb.net:27017,ac-chd20zt-shard-00-01.dxy3pnq.mongodb.net:27017,ac-chd20zt-shard-00-02.dxy3pnq.mongodb.net:27017/?ssl=true&replicaSet=atlas-pzifsb-shard-0&authSource=admin&retryWrites=true&w=majority",
+  "jwtSecret": "myJwtSecret-123"
+}
