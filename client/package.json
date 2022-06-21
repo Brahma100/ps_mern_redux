@@ -1,0 +1,57 @@
+{
+  "name": "ecom1",
+  "homepage": "https://brahma100.github.io/ps_kart1",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^28.1.1",
+    "@types/node": "^17.0.40",
+    "@types/react": "^18.0.12",
+    "@types/react-dom": "^18.0.5",
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.7",
+    "dotenv": "^16.0.1",
+    "gh-pages": "^4.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.8",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-router": "^6.3.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.1",
+    "sass": "^1.52.2",
+    "styled-components": "^5.3.5",
+    "typescript": "^4.7.3",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:8000/",
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
