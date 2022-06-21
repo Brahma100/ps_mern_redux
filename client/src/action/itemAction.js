@@ -11,27 +11,42 @@ export const getItems = () => dispatch => {
         }))
         .catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
 };
-export const addItem = item => dispatch => {
-    axios.post('api/add_product', item)
-        .then(res => dispatch({
-            type: ADD_ITEM,
-            payload: res.data
-        })).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
+export const addItem = item => (dispatch, getState) => {
+    const token = getState().auth.token;
+    // console.log("Token from load User", token);
+
+    // Header
+    const config = {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+    if (token) {
+        config.headers['x-auth-token'] = token;
+        axios.post('api/items', item, config)
+            .then(res => dispatch({
+                type: ADD_ITEM,
+                payload: res.data
+            })).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
+    }
 };
 
-export const deleteItem = id => dispatch => {
+export const deleteItem = id => (getState, dispatch) => {
     console.log("Id of Item", id);
+    const token = getState().auth.token;
     const config = {
         headers: { 'Content-Type': 'application/json' }
     }
-    const body = JSON.stringify({ id });
-    console.log("Action Product Id", id);
-    axios.post('api/delete', body, config).then(
-        res => dispatch({
-            type: DELETE_ITEM,
-            payload: id
-        })
-    ).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
+    if (token) {
+        config.headers['x-auth-token'] = token;
+        console.log("Action Product Id", id);
+        axios.delete(`api/items/${id}`, config).then(
+            res => dispatch({
+                type: DELETE_ITEM,
+                payload: id
+            })
+        ).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
+    }
 }
 
 export const setItemsLoading = () => {

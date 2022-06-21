@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/',async (req, res) => {
+router.post('/',auth, async (req, res) => {
   const newItem = new Item({
     name: req.body.name,
     imageUrl: req.body.imageUrl,

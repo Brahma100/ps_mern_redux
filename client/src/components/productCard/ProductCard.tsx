@@ -61,10 +61,10 @@ const ProductCard: FC<PropsCard> = ({ _id, name, price, imageUrl }) => {
                         <button className='cart-btn ' onClick={() => removeItemFromCart({ _id, name, price, imageUrl })}>-</button>
                     }
                 </div>
-                <button
+                {/* <button
                     onClick={() => deleteItem(_id)}
                     className='delete-btn '
-                >Delete</button>
+                >Delete</button> */}
             </div>
             <div className='product_data'>
                 <span className='product_name'>{name}</span>

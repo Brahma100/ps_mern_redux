@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { addItem } from "../../action/itemAction";
+import { useNavigate } from "react-router";
 import {
   Container,
   Form,
@@ -10,7 +13,8 @@ import {
   Title,
 } from "./auth.style";
 
-function AddProduct() {
+function AddProduct({addItem}) {
+  const navigate = useNavigate();
   const initialValues = { name: "", imageUrl: "", price: 0 };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
@@ -25,15 +29,10 @@ function AddProduct() {
     e.preventDefault();
     let errors=validate(formValues);
     setFormErrors(errors);
-    console.log("ERROR:",errors,Object.entries(errors).length);
+    // console.log("ERROR:",errors,Object.entries(errors).length);
     if(Object.entries(errors).length===0){
-      fetch('/api/items',{
-        method:'POST',  
-        headers: { 'Content-Type': 'application/json'},
-        body:JSON.stringify(formValues)
-      })
-      .then(res=>res.json())
-      .then()
+      addItem(formValues)
+      navigate('/');
     }
   };
   const handleClear = () => {
@@ -122,5 +121,9 @@ function AddProduct() {
     </Container>
   );
 }
+const mapStateToProps = (state)=>{
+  return({
 
-export default AddProduct;
+  })
+}
+export default connect(mapStateToProps, {addItem})(AddProduct);
