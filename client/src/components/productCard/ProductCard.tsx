@@ -2,7 +2,7 @@ import { FC, useState, useContext, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import { useNavigate} from 'react-router-dom'
 import './ProductCard.scss';
-import { CartContext } from '../../context/CartProvider';
+// import { CartContext } from '../../context/CartProvider';
 import { CartContextType, IStyleVisible, PropsCard } from '../../interfaces/interfaces';
 
 const ProductCard: FC<PropsCard> = ({ _id, name, price, imageUrl }) => {
@@ -10,15 +10,15 @@ const ProductCard: FC<PropsCard> = ({ _id, name, price, imageUrl }) => {
     const navigate=useNavigate();
     const [style, setStyle] = useState<IStyleVisible>({ display: 'none' });
     const [quantity, setQuantity] = useState<number>(0);
-    const { addItemToCart, removeItemFromCart, cartItems } = useContext(CartContext) as CartContextType;
-    useEffect(() => {
-        const existing = cartItems.find((item: PropsCard) => item._id === _id);
-        if (existing)
-            setQuantity(existing.quantity);
-        else
-            setQuantity(0);
+    // const { addItemToCart, removeItemFromCart, cartItems } = useContext(CartContext) as CartContextType;
+    // useEffect(() => {
+    //     const existing = cartItems.find((item: PropsCard) => item._id === _id);
+    //     if (existing)
+    //         setQuantity(existing.quantity);
+    //     else
+    //         setQuantity(0);
 
-    }, [cartItems])
+    // }, [cartItems])
 
     const deleteItem = (_id: string) => {
         fetch(`/api/items/${_id}`,
@@ -43,7 +43,7 @@ const ProductCard: FC<PropsCard> = ({ _id, name, price, imageUrl }) => {
                     backgroundImage: `url(${imageUrl})`
                 }}
             />
-            <div
+            {/* <div
                 className="button-group"
                 style={style}
             >
@@ -61,11 +61,11 @@ const ProductCard: FC<PropsCard> = ({ _id, name, price, imageUrl }) => {
                         <button className='cart-btn ' onClick={() => removeItemFromCart({ _id, name, price, imageUrl })}>-</button>
                     }
                 </div>
-                {/* <button
+                <button
                     onClick={() => deleteItem(_id)}
                     className='delete-btn '
-                >Delete</button> */}
-            </div>
+                >Delete</button>
+            </div> */}
             <div className='product_data'>
                 <span className='product_name'>{name}</span>
                 <span className='product_price'>₹{price}</span>

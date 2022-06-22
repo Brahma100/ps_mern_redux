@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import './ProductList.scss'
 import ProductCard from '../productCard/ProductCard';
-import Pagination from '../pagination/Pagination';
+// import Pagination from '../pagination/Pagination';
 import Loader from '../Loader/Loader';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { getItems } from '../../action/itemAction';
+import { setItemsLoading } from '../../action/itemAction';
 
 const ProductList = () => {
     const dispatch=useDispatch();
     const {items,itemsLoading, itemsLoaded} =useSelector(state=>state.item)
     const [products, setProducts] = useState([]);
     useEffect(() => {
-        dispatch(getItems());
+        console.log("Products:::",items)
+        dispatch(setItemsLoading());
     }, [])
     useEffect(() => {
         setProducts(items);
@@ -28,7 +29,7 @@ const ProductList = () => {
                     </div>
                 </article>
             }
-            <Pagination />
+            {/* <Pagination /> */}
         </div>
     </>
 }
