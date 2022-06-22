@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addItem } from "../../action/itemAction";
 import { useNavigate } from "react-router";
 import {
@@ -13,7 +13,8 @@ import {
   Title,
 } from "./auth.style";
 
-function AddProduct({addItem}) {
+function AddProduct() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const initialValues = { name: "", imageUrl: "", price: 0 };
   const [formValues, setFormValues] = useState(initialValues);
@@ -27,11 +28,11 @@ function AddProduct({addItem}) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let errors=validate(formValues);
+    let errors = validate(formValues);
     setFormErrors(errors);
     // console.log("ERROR:",errors,Object.entries(errors).length);
-    if(Object.entries(errors).length===0){
-      addItem(formValues)
+    if (Object.entries(errors).length === 0) {
+      dispatch(addItem(formValues));
       navigate('/');
     }
   };
@@ -59,7 +60,7 @@ function AddProduct({addItem}) {
     } else if (!regex.test(values.imageUrl)) {
       errors.imageUrl = "This is not a valid URL!";
     }
-    if (values.price <=0 ) {
+    if (values.price <= 0) {
       errors.price = "Price must be greater than ₹0";
     } else if (values.price > 1000) {
       errors.price = "Price cannot exceed ₹1000";
@@ -121,9 +122,4 @@ function AddProduct({addItem}) {
     </Container>
   );
 }
-const mapStateToProps = (state)=>{
-  return({
-
-  })
-}
-export default connect(mapStateToProps, {addItem})(AddProduct);
+export default AddProduct;

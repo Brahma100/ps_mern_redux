@@ -3,19 +3,19 @@ import './ProductList.scss'
 import ProductCard from '../productCard/ProductCard';
 import Pagination from '../pagination/Pagination';
 import Loader from '../Loader/Loader';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getItems } from '../../action/itemAction';
-// import PropTypes  from 'prop-types';
 
-const ProductList = ({getItems,items, itemsLoading, itemsLoaded }) => {
+const ProductList = () => {
+    const dispatch=useDispatch();
+    const {items,itemsLoading, itemsLoaded} =useSelector(state=>state.item)
     const [products, setProducts] = useState([]);
     useEffect(() => {
-        getItems();
-        console.log("Items::",items)
-       
+        dispatch(getItems());
     }, [])
     useEffect(() => {
-        setProducts(items)
+        setProducts(items);
     }, [items])
     return <>
         <div className='container'>
@@ -32,11 +32,5 @@ const ProductList = ({getItems,items, itemsLoading, itemsLoaded }) => {
         </div>
     </>
 }
-const mapStateToProps = (state) => {
-    return ({
-        items: state.item.items,
-        itemsLoading: state.item.itemsLoading,
-        itemsLoaded: state.item.itemsLoaded,
-    })
-}
-export default connect(mapStateToProps, { getItems })(ProductList);
+
+export default ProductList;

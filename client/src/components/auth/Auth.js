@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { login, register, loadUser } from "../../action/authActions";
 import Loading from '../Loader/Loader'
@@ -15,7 +15,9 @@ import {
   Title,
 } from "./auth.style";
 
-function Auth({ isAuthenticated, isLoading, user, login, register, loadUser }) {
+function Auth() {
+  const dispatch = useDispatch();
+  const {isAuthenticated}=useSelector(state=>state.auth)
   const initialValues = { name: "", email: "", password: "" };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
@@ -37,7 +39,7 @@ function Auth({ isAuthenticated, isLoading, user, login, register, loadUser }) {
     e.preventDefault();
     setFormErrors(validate(formValues));
     if (Object.entries(formErrors).length === 0) {
-      isLogin ? login(formValues) : register(formValues);
+      dispatch(isLogin ? login(formValues) : register(formValues));
     }
   };
   const handleClear = () => {
@@ -141,4 +143,4 @@ const mapStateToProps = (state) => {
   })
 }
 
-export default connect(mapStateToProps, { loadUser, login, register, clearErrors })(Auth);
+export default Auth;

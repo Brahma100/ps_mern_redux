@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout, loadUser } from '../../action/authActions'
 
-const Navbar = ({ isAuthenticated, logout, loadUser }) => {
-    useEffect(() => loadUser(), []);
+const Navbar = () => {
+    const dispatch = useDispatch();
+    const { isAuthenticated } = useSelector(state => state.auth);
+    useEffect(() => dispatch(loadUser()), [dispatch]);
     return (
         <header>
             <nav className="nav" style={{ textAlign: 'center' }}>
@@ -20,7 +22,7 @@ const Navbar = ({ isAuthenticated, logout, loadUser }) => {
                         isAuthenticated &&
                         <>
                             <li><Link to='/addItem'>Add Item</Link></li>
-                            <li><button className="btn" onClick={logout}>Logout</button></li>
+                            <li><button className="btn" onClick={()=>dispatch(logout())}>Logout</button></li>
                         </>
                     }
 
@@ -29,9 +31,5 @@ const Navbar = ({ isAuthenticated, logout, loadUser }) => {
         </header>
     )
 }
-const mapStateToProps = (state) => {
-    return ({
-        isAuthenticated: state.auth.isAuthenticated
-    })
-}
-export default connect(mapStateToProps, { logout, loadUser })(Navbar);
+
+export default Navbar;
